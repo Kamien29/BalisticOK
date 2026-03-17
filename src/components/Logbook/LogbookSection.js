@@ -1,7 +1,14 @@
+import { useMemo, useState } from 'react';
 import { Reveal } from '../common/Reveal';
 import { GlassCard } from '../common/GlassCard';
+import { ImageLightbox } from '../Gallery/ImageLightbox';
+import { demoImages } from '../Gallery/demoImages';
 
 export function LogbookSection() {
+  const images = useMemo(() => demoImages, []);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
   return (
     <section id="logbook" className="section section-alt">
       <Reveal className="section-header">
@@ -44,15 +51,33 @@ export function LogbookSection() {
           <GlassCard>
             <h3>Galeria (placeholder)</h3>
             <div className="gallery">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="gallery-tile glass">
+              {images.map((img, i) => (
+                <button
+                  key={img.src}
+                  type="button"
+                  className="gallery-tile glass gallery-tile-btn"
+                  onClick={() => {
+                    setLightboxIndex(i);
+                    setLightboxOpen(true);
+                  }}
+                  aria-label={`Otwórz zdjęcie ${i + 1}`}
+                >
+                  <img className="gallery-thumb" src={img.src} alt={img.alt ?? ''} loading="lazy" />
                   <div className="gallery-caption">Zdjęcie #{i + 1}</div>
-                </div>
+                </button>
               ))}
             </div>
           </GlassCard>
         </Reveal>
       </div>
+
+      <ImageLightbox
+        open={lightboxOpen}
+        images={images}
+        index={lightboxIndex}
+        onIndexChange={setLightboxIndex}
+        onClose={() => setLightboxOpen(false)}
+      />
     </section>
   );
 }
