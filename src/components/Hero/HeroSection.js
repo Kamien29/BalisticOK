@@ -1,5 +1,3 @@
-import { Reveal } from '../common/Reveal';
-
 export function HeroSection({ theme, setTheme, nextThemeLabel, navOpen, setNavOpen }) {
   return (
     <header className="hero">
