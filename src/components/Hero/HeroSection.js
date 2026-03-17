@@ -4,7 +4,7 @@ export function HeroSection({ theme, setTheme, nextThemeLabel, navOpen, setNavOp
   return (
     <header className="hero">
       <nav className={`nav ${navOpen ? 'nav-open' : ''}`.trim()}>
-        <div className="logo">Projekt Rakieta</div>
+        <div className="logo">BalisticOK</div>
         <div className="nav-right">
           <button
             type="button"
