@@ -34,7 +34,6 @@ function App() {
     const tick = () => {
       const t = Date.now() / 1000;
       setTelemetry((prev) => {
-        const stage = prev.stage;
         const stage2 = t % 30 > 18 ? 2 : 1;
         const altBase = stage2 === 2 ? 720 : 320;
         const velBase = stage2 === 2 ? 185 : 120;
