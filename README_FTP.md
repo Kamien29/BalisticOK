@@ -4,7 +4,7 @@ Ten wariant nie wymaga Node.js ani Dockera na hostingu. Wymaga **PHP 8.0+**, roz
 
 ## Zbudowanie plików lokalnie
 ```bash
-npm ci
+npm install
 npm run build:ftp
 ```
 
