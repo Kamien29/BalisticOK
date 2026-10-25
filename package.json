@@ -18,7 +18,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "serve": "node server/index.js",
-    "test:server": "node --test server/*.test.js"
+    "test:server": "node --test server/*.test.js",
+    "build:ftp": "node scripts/build-ftp.js"
   },
   "eslintConfig": {
     "extends": [

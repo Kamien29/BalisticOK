@@ -21,3 +21,7 @@ Dla produkcji bez Dockera ustaw `DATA_DIR`, `ADMIN_TOKEN`, `PORT` i reverse prox
 API: `GET /api/media`, `POST /api/media?slot=gallery&alt=opis` z Bearer token, `DELETE /api/media/:id` z Bearer token. Format: JPG/PNG/WEBP/GIF, maks. 8 MB.
 Sekcje inne niż galeria przyjmują po jednym zdjęciu — upload nowego zastępuje stare. Galeria ma wiele zdjęć.
 Zdjęcia są publiczne, więc nie dodawaj poufnych plików ani zdjęć z prywatnymi danymi EXIF.
+
+## Wersja na zwykły hosting FTP (PHP)
+
+Zobacz [README_FTP.md](README_FTP.md): `npm run build:ftp`, następnie prześlij zawartość `build/` przez FTP i ustaw `api/config.php`.

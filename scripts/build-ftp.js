@@ -1,0 +1,10 @@
+const fs=require('node:fs');const path=require('node:path');const {spawnSync}=require('node:child_process');
+const root=path.resolve(__dirname,'..');
+const runner=process.platform==='win32'?'npm.cmd':'npm';
+const result=spawnSync(runner,['run','build'],{cwd:root,env:{...process.env,REACT_APP_MEDIA_API:'/api/media.php',CI:'false'},stdio:'inherit'});
+if(result.status!==0)process.exit(result.status||1);
+const target=path.join(root,'build','api');
+fs.mkdirSync(path.join(target,'storage'),{recursive:true});
+for(const name of ['media.php','config.example.php','.htaccess'])fs.copyFileSync(path.join(root,'api',name),path.join(target,name));
+for(const name of ['.htaccess','index.php'])fs.copyFileSync(path.join(root,'api','storage',name),path.join(target,'storage',name));
+console.log('FTP ready: upload contents of build/ to public_html/. Set api/config.php on server.');
