@@ -1,3 +1,4 @@
+import { SectionImage } from '../Media/SectionImage';
 import { Reveal } from '../common/Reveal';
 import { GlassCard } from '../common/GlassCard';
 
@@ -15,27 +16,21 @@ export function TeamSection() {
         <Reveal>
           <GlassCard>
             <h3>Mechanika i konstrukcja</h3>
-            <div className="section-image-placeholder">
-              <span>miejsce na grafikę zespołu mechaniki</span>
-            </div>
+            <SectionImage slot="team-mechanics" placeholder="miejsce na grafikę zespołu mechaniki" />
             <p>Projektowanie kadłuba, mocowań, systemu separacji oraz spadochronu.</p>
           </GlassCard>
         </Reveal>
         <Reveal>
           <GlassCard>
             <h3>Elektronika i programowanie</h3>
-            <div className="section-image-placeholder">
-              <span>miejsce na grafikę zespołu elektroniki</span>
-            </div>
+            <SectionImage slot="team-electronics" placeholder="miejsce na grafikę zespołu elektroniki" />
             <p>Komputer pokładowy, czujniki, zasilanie, oprogramowanie i telemetria.</p>
           </GlassCard>
         </Reveal>
         <Reveal>
           <GlassCard>
             <h3>Organizacja i komunikacja</h3>
-            <div className="section-image-placeholder">
-              <span>miejsce na grafikę zespołu organizacji</span>
-            </div>
+            <SectionImage slot="team-organization" placeholder="miejsce na grafikę zespołu organizacji" />
             <p>Planowanie, dokumentacja, media społecznościowe, kontakty ze szkołami.</p>
           </GlassCard>
         </Reveal>

@@ -1,3 +1,5 @@
+import { MediaProvider } from '../Media/MediaContext';
+import { MediaAdmin } from '../Media/MediaAdmin';
 import React from 'react';
 import { HeroSection } from '../Hero/HeroSection';
 import { AboutSection } from '../About/AboutSection';
@@ -19,7 +21,7 @@ export function Root({
   faqItems,
 }) {
   return (
-    <div className="app">
+    <MediaProvider><div className="app">
       <div className="bg-blobs" aria-hidden="true">
         <div className="blob blob-a" />
         <div className="blob blob-b" />
@@ -43,11 +45,12 @@ export function Root({
         <FAQSection items={faqItems} />
         <TimelineSection />
         <ContactSection />
+        <MediaAdmin />
       </main>
 
       <footer className="footer">
         <p>© {new Date().getFullYear()} Projekt Rakieta – zespół uczniów.</p>
       </footer>
-    </div>
+    </div></MediaProvider>
   );
 }
