@@ -1,3 +1,4 @@
+import { SectionImage } from '../Media/SectionImage';
 import { Reveal } from '../common/Reveal';
 import { GlassCard } from '../common/GlassCard';
 
@@ -15,9 +16,7 @@ export function RocketSection() {
         <Reveal>
           <GlassCard>
             <h3>Stopień I – start</h3>
-            <div className="section-image-placeholder">
-              <span>miejsce na grafikę stopnia I</span>
-            </div>
+            <SectionImage slot="rocket-1" placeholder="miejsce na grafikę stopnia I" />
             <p>
               Główny silnik na paliwo stałe zapewniający ciąg potrzebny do wyniesienia rakiety na
               odpowiednią wysokość. Konstrukcja skupiona na bezpieczeństwie i stabilności lotu.
@@ -27,9 +26,7 @@ export function RocketSection() {
         <Reveal>
           <GlassCard>
             <h3>Stopień II – wznoszenie</h3>
-            <div className="section-image-placeholder">
-              <span>miejsce na grafikę stopnia II</span>
-            </div>
+            <SectionImage slot="rocket-2" placeholder="miejsce na grafikę stopnia II" />
             <p>
               Drugi stopień odpowiada za dalsze wynoszenie rakiety oraz stabilizację trajektorii.
               Separacja stopni jest sterowana elektronicznie.
@@ -39,9 +36,7 @@ export function RocketSection() {
         <Reveal>
           <GlassCard>
             <h3>Komputer pokładowy</h3>
-            <div className="section-image-placeholder">
-              <span>miejsce na grafikę komputera</span>
-            </div>
+            <SectionImage slot="rocket-computer" placeholder="miejsce na grafikę komputera" />
             <p>
               Moduł z mikrokontrolerem, akcelerometrem, żyroskopem, GPS oraz rejestratorem danych.
               Odpowiada za pomiary, decyzje sterujące i późniejszą analizę lotu.

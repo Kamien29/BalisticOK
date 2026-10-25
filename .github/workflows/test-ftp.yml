@@ -1,0 +1,36 @@
+name: Test FTP and server
+on:
+  push:
+    branches: [feat/self-hosted-media]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build FTP package
+        run: npm run build:ftp
+      - name: Verify FTP files
+        run: |
+          test -f build/index.html
+          test -f build/api/media.php
+          test -f build/api/storage/.htaccess
+      - name: PHP syntax
+        run: php -l api/media.php && php -l api/config.example.php
+      - name: PHP integration
+        run: python3 tests/integration_ftp.py
+      - name: Node API tests
+        run: npm run test:server
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BalisticOK-FTP
+          path: build/
+          include-hidden-files: true
+          retention-days: 14

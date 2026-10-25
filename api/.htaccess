@@ -1,0 +1,4 @@
+Options -Indexes
+<FilesMatch "^(config\.php|config\.example\.php|.*\.json|.*\.lock)$">
+ Require all denied
+</FilesMatch>

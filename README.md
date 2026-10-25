@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# BalisticOK — instalacja na własnym serwerze
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Projekt zawiera stronę React, serwer Node.js i upload zdjęć do galerii, trzech kart rakiety i trzech kart zespołu. Zdjęcia zapisują się trwale w katalogu `/app/data`, a usuwanie oraz dodawanie wymaga hasła administratora.
 
-## Available Scripts
+## Instalacja Docker + domena (zalecana)
 
-In the project directory, you can run:
+Wymagane: VPS Linux, Docker Engine z Docker Compose, rekord A (oraz AAAA, jeśli dotyczy) domeny skierowany na IP VPS i otwarte porty 80/443.
 
-### `npm start`
+1. Sklonuj repozytorium, wybierz gałąź `feat/self-hosted-media`.
+2. Wykonaj `cp .env.example .env`.
+3. W pliku `.env` ustaw `DOMAIN` na własną domenę i `ADMIN_TOKEN` na wygenerowany sekret (minimum 24 znaki, np. `openssl rand -hex 32`).
+4. Wykonaj `docker compose up -d --build`.
+5. Otwórz `https://twoja-domena.pl/#admin` i wpisz sekret, aby dodawać lub usuwać zdjęcia. Caddy automatycznie obsłuży HTTPS, jeśli domena i porty działają.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Ważne:** Dane zdjęć są w wolumenie Docker `balistic_data`. Rób backup całego wolumenu, w tym `media.json` i `uploads/`. Nie uruchamiaj `docker compose down -v` bez kopii. Hasło `.env` nie jest commitowane.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Lokalnie
 
-### `npm test`
+Node.js 22 LTS. Wykonaj `npm ci && npm run build`, a potem `ADMIN_TOKEN=twoje-bardzo-dlugie-haslo-admina npm run serve` (strona na porcie 3000).
+Dla produkcji bez Dockera ustaw `DATA_DIR`, `ADMIN_TOKEN`, `PORT` i reverse proxy HTTPS na lokalny port 3000.
+API: `GET /api/media`, `POST /api/media?slot=gallery&alt=opis` z Bearer token, `DELETE /api/media/:id` z Bearer token. Format: JPG/PNG/WEBP/GIF, maks. 8 MB.
+Sekcje inne niż galeria przyjmują po jednym zdjęciu — upload nowego zastępuje stare. Galeria ma wiele zdjęć.
+Zdjęcia są publiczne, więc nie dodawaj poufnych plików ani zdjęć z prywatnymi danymi EXIF.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Wersja na zwykły hosting FTP (PHP)
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Zobacz [README_FTP.md](README_FTP.md): `npm run build:ftp`, następnie prześlij zawartość `build/` przez FTP i ustaw `api/config.php`.

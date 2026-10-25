@@ -1,11 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Reveal } from '../common/Reveal';
 import { GlassCard } from '../common/GlassCard';
 import { ImageLightbox } from '../Gallery/ImageLightbox';
-import { demoImages } from '../Gallery/demoImages';
+import { useMedia } from '../Media/MediaContext';
 
 export function LogbookSection() {
-  const images = useMemo(() => demoImages, []);
+  const { media, loading, error } = useMedia();
+  const images = media.gallery;
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -49,11 +50,14 @@ export function LogbookSection() {
         </Reveal>
         <Reveal>
           <GlassCard>
-            <h3>Galeria (placeholder)</h3>
+            <h3>Galeria</h3>
+            {loading && <p>Wczytywanie zdjęć…</p>}
+            {error && <p role="alert">{error}</p>}
+            {!loading && images.length === 0 && <p>Brak zdjęć. Dodaj je w panelu administratora.</p>}
             <div className="gallery">
               {images.map((img, i) => (
                 <button
-                  key={img.src}
+                  key={img.id}
                   type="button"
                   className="gallery-tile glass gallery-tile-btn"
                   onClick={() => {
@@ -63,7 +67,7 @@ export function LogbookSection() {
                   aria-label={`Otwórz zdjęcie ${i + 1}`}
                 >
                   <img className="gallery-thumb" src={img.src} alt={img.alt ?? ''} loading="lazy" />
-                  <div className="gallery-caption">Zdjęcie #{i + 1}</div>
+                  <div className="gallery-caption">{img.alt}</div>
                 </button>
               ))}
             </div>
@@ -72,7 +76,7 @@ export function LogbookSection() {
       </div>
 
       <ImageLightbox
-        open={lightboxOpen}
+        open={lightboxOpen && images.length > 0}
         images={images}
         index={lightboxIndex}
         onIndexChange={setLightboxIndex}
